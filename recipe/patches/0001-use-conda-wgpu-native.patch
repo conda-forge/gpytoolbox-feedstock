@@ -1,0 +1,110 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: conda-forge staged-recipes <conda-forge@users.noreply.github.com>
+Date: Mon, 11 May 2026 08:45:00 -0700
+Subject: [PATCH] Use conda-forge build dependencies
+
+Avoid fetching WebGPU-distribution's prebuilt wgpu-native binaries during the
+build. The recipe provides matching C/C++ WebGPU headers as explicit hashed
+sources because the current conda-forge WebGPU C headers are not
+source-compatible with this generated wrapper, and links the extension against
+conda-forge's wgpu-native package. Also use conda-forge pybind11 and nanoflann
+instead of adding those projects as source copies.
+---
+ CMakeLists.txt    |  6 +++---
+ cmake/webgpu.cmake | 55 +++++++++++++++++++++++++++++++++++++++++++++---------
+ 2 files changed, 51 insertions(+), 10 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 46ba7e4..cdf4f49 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -47,6 +47,6 @@ target_include_directories(PoissonRecon INTERFACE "${CMAKE_BINARY_DIR}/_deps/poi
+ 
+ # Include nanoflann
+-include(nanoflann)
++find_package(nanoflann CONFIG REQUIRED)
+ 
+ # Include webgpu
+ include(webgpu)
+@@ -61,7 +61,7 @@ else()
+ endif()
+ 
+ # List of all libraries to link
+-set(LIBRARIES_TO_LINK igl::core igl::embree nanoflann PoissonRecon ${GL_LIBS})
++set(LIBRARIES_TO_LINK igl::core igl::embree nanoflann::nanoflann PoissonRecon ${GL_LIBS})
+ set(COPYLEFT_LIBRARIES_TO_LINK igl::core igl_copyleft::cgal)
+ 
+ add_library(cpytoolbox
+@@ -151,7 +151,7 @@ target_link_libraries(cpytoolbox_copyleft ${COPYLEFT_LIBRARIES_TO_LINK})
+ set(COPYLEFT_LIBRARIES_TO_LINK cpytoolbox_copyleft ${COPYLEFT_LIBRARIES_TO_LINK})
+ 
+ # Otman's python bindings using pybind11
+-add_subdirectory(./ext/pybind11/)
++find_package(pybind11 CONFIG REQUIRED)
+ pybind11_add_module(gpytoolbox_bindings
+     "${CMAKE_CURRENT_SOURCE_DIR}/src/cpp/gpytoolbox_bindings_core.cpp"
+ 	"${CMAKE_CURRENT_SOURCE_DIR}/src/cpp/binding_read_obj.cpp"
+diff --git a/cmake/webgpu.cmake b/cmake/webgpu.cmake
+index 5bcd7a3..57f48af 100644
+--- a/cmake/webgpu.cmake
++++ b/cmake/webgpu.cmake
+@@ -2,10 +2,51 @@ if(TARGET webgpu)
+     return()
+ endif()
+ 
+-include(FetchContent)
+-FetchContent_Declare(
+-    webgpu
+-    GIT_REPOSITORY https://github.com/eliemichel/WebGPU-distribution.git
+-    GIT_TAG 9dd47f8515dfd7112b750da07e719460a88bf2e8
+-)
+-FetchContent_MakeAvailable(webgpu)
+\ No newline at end of file
++set(WGPU_PREFIX "$ENV{PREFIX}")
++set(WGPU_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/ext/webgpu-distribution-headers")
++
++add_library(webgpu SHARED IMPORTED GLOBAL)
++target_compile_definitions(webgpu INTERFACE WEBGPU_BACKEND_WGPU)
++
++if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
++    find_file(
++        WGPU_RUNTIME_LIB
++        NAMES wgpu_native.dll
++        PATHS "${WGPU_PREFIX}/Library/bin"
++        NO_DEFAULT_PATH
++    )
++    find_library(
++        WGPU_IMPORT_LIB
++        NAMES wgpu_native
++        PATHS "${WGPU_PREFIX}/Library/lib"
++        NO_DEFAULT_PATH
++    )
++    set_target_properties(
++        webgpu
++        PROPERTIES
++            IMPORTED_LOCATION "${WGPU_RUNTIME_LIB}"
++            IMPORTED_IMPLIB "${WGPU_IMPORT_LIB}"
++            INTERFACE_INCLUDE_DIRECTORIES "${WGPU_HEADERS}"
++            INTERFACE_LINK_LIBRARIES "ws2_32;userenv;bcrypt;ntdll;d3dcompiler"
++    )
++else()
++    find_library(
++        WGPU_RUNTIME_LIB
++        NAMES wgpu_native libwgpu_native
++        PATHS "${WGPU_PREFIX}/lib"
++        NO_DEFAULT_PATH
++    )
++    set_target_properties(
++        webgpu
++        PROPERTIES
++            IMPORTED_LOCATION "${WGPU_RUNTIME_LIB}"
++            INTERFACE_INCLUDE_DIRECTORIES "${WGPU_HEADERS}"
++    )
++endif()
++
++if(NOT WGPU_RUNTIME_LIB)
++    message(FATAL_ERROR "Could not find conda-forge wgpu-native library")
++endif()
++
++function(target_copy_webgpu_binaries Target)
++endfunction()

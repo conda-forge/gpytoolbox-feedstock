@@ -1,0 +1,100 @@
+{% set name = "gpytoolbox" %}
+{% set version = "0.3.4" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  - url: https://github.com/sgsellan/gpytoolbox/archive/v{{ version }}.tar.gz
+    sha256: d944aa33b5506441f5907a15a2db3979c609563588cda1214b3245657c3eaf13
+    patches:
+      - patches/0001-use-conda-wgpu-native.patch
+  # These C headers must match the generated C++ wrapper below. The current
+  # conda-forge WebGPU C headers are source-incompatible with this wrapper.
+  - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/include/webgpu/webgpu.h
+    sha256: 09e3fca980bfbb880b26b0d7fbdfd9d284a3faa99942d198c7a208f9be7a0bfb
+    folder: ext/webgpu-distribution-headers/webgpu
+  - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/include/webgpu/wgpu.h
+    sha256: a9310591ee1bc51928577f4140d12172b0257f253afce9838e53b665f0ee0d7f
+    folder: ext/webgpu-distribution-headers/webgpu
+  - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/include/webgpu/webgpu.hpp
+    sha256: 61ab357865b9d7d765f46837fe651c0ebd84e4f3955a9bea084f962fa539de46
+    folder: ext/webgpu-distribution-headers/webgpu
+  - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/LICENSE.txt
+    sha256: 46f069fb0e448fb4d5e9e21b3483912495381399656fe7a1190541b7bf74f668
+    folder: ext/webgpu-distribution-headers
+
+build:
+  number: 0
+  skip: true  # [python_impl == 'pypy' or py>=313]
+  script:
+    - "{{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation"
+    # wgpu-native 0.17.0.2 has a macOS install name with its build prefix.
+    # Rewrite the extension dependency to the packaged dylib's rpath.
+    - for lib in "${SP_DIR}"/gpytoolbox_bindings*.so; do old_path="$(otool -L "${lib}" | awk '/libwgpu_native[.]dylib/ {print $1; exit}')"; if [ -n "${old_path}" ]; then install_name_tool -change "${old_path}" "@rpath/libwgpu_native.dylib" "${lib}"; fi; done  # [osx]
+
+requirements:
+  build:
+    - {{ compiler("c") }}
+    - {{ compiler("cxx") }}
+    - {{ stdlib("c") }}
+    - cmake >=3.16,<3.27
+    - make        # [linux]
+    - packaging   # [target_platform != build_platform]
+    - pip         # [target_platform != build_platform]
+    - python      # [target_platform != build_platform]
+    - setuptools  # [target_platform != build_platform]
+    - wheel       # [target_platform != build_platform]
+  host:
+    - packaging
+    - pip
+    - python
+    - pybind11
+    - setuptools
+    - wheel
+    - libgl-devel           # [linux]
+    - libopengl-devel       # [linux]
+    - xorg-libx11            # [linux]
+    - xorg-xorgproto         # [linux]
+    - xorg-libxrandr         # [linux]
+    - xorg-libxinerama       # [linux]
+    - xorg-libxcursor        # [linux]
+    - xorg-libxi             # [linux]
+    - libxkbcommon           # [linux]
+    - nanoflann
+    - wayland                # [linux]
+    # gpytoolbox v0.3.4's generated WebGPU wrapper matches this runtime.
+    # Newer 0.17.x headers remove or rename APIs used by upstream.
+    - wgpu-native 0.17.0.2
+  run:
+    - numpy >=1.22.4,<2.3
+    - python
+    - scikit-image
+    - scipy >=1.7,<1.14
+    - scs
+
+test:
+  imports:
+    - gpytoolbox
+    - gpytoolbox.copyleft
+    - gpytoolbox_bindings
+    - gpytoolbox_bindings_copyleft
+  commands:
+    - pip check
+    - python -c "import gpytoolbox as gpy; v, f = gpy.regular_square_mesh(2); assert v.shape[1] == 2; assert f.shape[1] == 3"
+  requires:
+    - pip
+
+about:
+  home: https://github.com/sgsellan/gpytoolbox
+  summary: A collection of utility functions to prototype geometry processing research in python
+  license: MIT AND GPL-3.0-only
+  license_file:
+    - LICENSE.MIT
+    - LICENSE.GPL
+    - ext/webgpu-distribution-headers/LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - jeongseok-meta

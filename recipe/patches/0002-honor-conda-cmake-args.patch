@@ -1,0 +1,34 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: conda-forge staged-recipes <conda-forge@users.noreply.github.com>
+Date: Wed, 13 May 2026 18:30:00 -0700
+Subject: [PATCH] Honor conda-forge CMake arguments
+
+conda-build exports cross-compilation settings in CMAKE_ARGS. Propagate those
+arguments into upstream's setuptools-driven CMake configure step so downstream
+dependencies such as Embree see the intended target platform.
+---
+ setup.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/setup.py b/setup.py
+index 3dc6f5f..d255b7c 100644
+--- a/setup.py
++++ b/setup.py
+@@ -4,6 +4,7 @@ import os
+ import re
+ import sys
+ import platform
++import shlex
+ import subprocess
+ import setuptools
+ from setuptools import setup, Extension
+@@ -42,7 +43,8 @@ class CMakeBuild(build_ext):
+ 
+     def build_extension(self, ext):
+         extdir = os.path.abspath(os.path.dirname(self.get_ext_fullpath(ext.name)))
+-        cmake_args = ['-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=' + extdir,
++        cmake_args = shlex.split(os.environ.get('CMAKE_ARGS', ''))
++        cmake_args += ['-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=' + extdir,
+                       '-DPYTHON_EXECUTABLE=' + sys.executable]
+ 
+         # This is horrible, I don't know other way of installing dependencies on the wheel dependencies

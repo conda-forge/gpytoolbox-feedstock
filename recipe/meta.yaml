@@ -10,6 +10,7 @@ source:
     sha256: 826bc93720cd341c751a19a9ac0c772afcea3a5992854534fe2c44d2d6cf1940
     patches:
       - patches/0001-use-conda-wgpu-native.patch
+      - patches/0002-honor-conda-cmake-args.patch
   # These C headers must match the generated C++ wrapper below. The current
   # conda-forge WebGPU C headers are source-incompatible with this wrapper.
   - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/include/webgpu/webgpu.h
@@ -27,6 +28,8 @@ source:
 
 build:
   number: 1
+  # Upstream builds libigl's Embree integration, which currently supports
+  # conda-forge's x86 and ARM targets but not linux-ppc64le.
   skip: true  # [python_impl == 'pypy' or py>=313]
   script:
     - "{{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation"

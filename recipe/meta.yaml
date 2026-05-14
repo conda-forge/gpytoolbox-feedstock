@@ -26,7 +26,7 @@ source:
     folder: ext/webgpu-distribution-headers
 
 build:
-  number: 0
+  number: 1
   skip: true  # [python_impl == 'pypy' or py>=313]
   script:
     - "{{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation"
@@ -75,6 +75,8 @@ requirements:
     - scs
 
 test:
+  files:
+    - run_test.py
   imports:
     - gpytoolbox
     - gpytoolbox.copyleft
@@ -82,6 +84,7 @@ test:
     - gpytoolbox_bindings_copyleft
   commands:
     - pip check
+    - python run_test.py
     - python -c "import gpytoolbox as gpy; v, f = gpy.regular_square_mesh(2); assert v.shape[1] == 2; assert f.shape[1] == 3"
   requires:
     - pip

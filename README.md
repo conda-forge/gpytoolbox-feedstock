@@ -9,6 +9,8 @@ Package license: MIT AND GPL-3.0-only
 
 Summary: A collection of utility functions to prototype geometry processing research in python
 
+Development: https://github.com/sgsellan/gpytoolbox
+
 Current build status
 ====================
 

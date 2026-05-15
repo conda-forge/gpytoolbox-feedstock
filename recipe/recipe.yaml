@@ -19,16 +19,20 @@ source:
   # conda-forge WebGPU C headers are source-incompatible with this wrapper.
   - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/include/webgpu/webgpu.h
     sha256: 09e3fca980bfbb880b26b0d7fbdfd9d284a3faa99942d198c7a208f9be7a0bfb
-    file_name: ext/webgpu-distribution-headers/webgpu/webgpu.h
+    target_directory: ext/webgpu-distribution-headers/webgpu
+    file_name: webgpu.h
   - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/include/webgpu/wgpu.h
     sha256: a9310591ee1bc51928577f4140d12172b0257f253afce9838e53b665f0ee0d7f
-    file_name: ext/webgpu-distribution-headers/webgpu/wgpu.h
+    target_directory: ext/webgpu-distribution-headers/webgpu
+    file_name: wgpu.h
   - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/include/webgpu/webgpu.hpp
     sha256: 61ab357865b9d7d765f46837fe651c0ebd84e4f3955a9bea084f962fa539de46
-    file_name: ext/webgpu-distribution-headers/webgpu/webgpu.hpp
+    target_directory: ext/webgpu-distribution-headers/webgpu
+    file_name: webgpu.hpp
   - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/LICENSE.txt
     sha256: 46f069fb0e448fb4d5e9e21b3483912495381399656fe7a1190541b7bf74f668
-    file_name: ext/webgpu-distribution-headers/LICENSE.txt
+    target_directory: ext/webgpu-distribution-headers
+    file_name: LICENSE.txt
 
 build:
   number: ${{ build_number }}

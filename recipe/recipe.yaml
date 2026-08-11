@@ -3,7 +3,7 @@ schema_version: 1
 context:
   name: gpytoolbox
   version: "0.3.7"
-  build_number: 2
+  build_number: 3
 
 package:
   name: ${{ name|lower }}
@@ -15,6 +15,7 @@ source:
     patches:
       - patches/0001-use-conda-wgpu-native.patch
       - patches/0002-honor-conda-cmake-args.patch
+      - patches/0003-make-embree-optional.patch
   # These C headers must match the generated C++ wrapper below. The current
   # conda-forge WebGPU C headers are source-incompatible with this wrapper.
   - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/include/webgpu/webgpu.h
@@ -36,12 +37,14 @@ source:
 
 build:
   number: ${{ build_number }}
-  # Upstream builds libigl's Embree integration, which currently supports
-  # conda-forge's x86 and ARM targets but not linux-ppc64le.
+  # Embree is unavailable on linux-ppc64le. The optional fast path is disabled
+  # there, while GPyToolbox's portable AABB implementation remains available.
   skip:
     - python_impl == "pypy"
     - match(python, ">=3.13")
   script:
+    - if: target_platform == "linux-ppc64le"
+      then: export CMAKE_ARGS="${CMAKE_ARGS} -DLIBIGL_EMBREE=OFF"
     - python -m pip install . -vv --no-deps --no-build-isolation
     # wgpu-native 0.17.0.2 has a macOS install name with its build prefix.
     # Rewrite the extension dependency to the packaged dylib's rpath.
@@ -114,6 +117,8 @@ tests:
       - pip check
       - python run_test.py
       - python -c "import gpytoolbox as gpy; v, f = gpy.regular_square_mesh(2); assert v.shape[1] == 2; assert f.shape[1] == 3"
+      - if: target_platform == "linux-ppc64le"
+        then: python -c "import gpytoolbox_bindings as bindings; assert bindings._has_embree is False"
     files:
       recipe:
         - run_test.py
@@ -133,5 +138,6 @@ about:
     - ext/webgpu-distribution-headers/LICENSE.txt
 
 extra:
+  feedstock-name: gpytoolbox
   recipe-maintainers:
     - jeongseok-meta

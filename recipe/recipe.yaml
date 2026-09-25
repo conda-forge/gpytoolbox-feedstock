@@ -3,7 +3,7 @@ schema_version: 1
 context:
   name: gpytoolbox
   version: "0.3.7"
-  build_number: 3
+  build_number: 4
 
 package:
   name: ${{ name|lower }}
@@ -76,23 +76,16 @@ requirements:
     - setuptools
     - wheel
     - if: linux
-      then: libgl-devel
-    - if: linux
-      then: libopengl-devel
-    - if: linux
-      then: xorg-libx11
-    - if: linux
-      then: xorg-xorgproto
-    - if: linux
-      then: xorg-libxrandr
-    - if: linux
-      then: xorg-libxinerama
-    - if: linux
-      then: xorg-libxcursor
-    - if: linux
-      then: xorg-libxi
-    - if: linux
-      then: libxkbcommon
+      then:
+        - libgl-devel
+        - libopengl-devel
+        - xorg-libx11
+        - xorg-xorgproto
+        - xorg-libxrandr
+        - xorg-libxinerama
+        - xorg-libxcursor
+        - xorg-libxi
+        - libxkbcommon
     - nanoflann
     - if: linux
       then: wayland

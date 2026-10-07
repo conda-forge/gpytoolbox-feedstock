@@ -43,3 +43,13 @@ times, face_ids, barycentric = gpytoolbox.ray_mesh_intersect(
 np.testing.assert_allclose(times, [1.0])
 assert face_ids[0] in (0, 1)
 np.testing.assert_allclose(np.sum(barycentric, axis=1), [1.0])
+
+square = np.array([[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]])
+tri_vertices, tri_faces = gpytoolbox.triangulate_polygon(
+    square,
+    gpytoolbox.edge_indices(square.shape[0], closed=True),
+)
+corners = tri_vertices[tri_faces]
+e1 = corners[:, 1] - corners[:, 0]
+e2 = corners[:, 2] - corners[:, 0]
+np.testing.assert_allclose(0.5 * np.abs(e1[:, 0] * e2[:, 1] - e1[:, 1] * e2[:, 0]).sum(), 1.0)

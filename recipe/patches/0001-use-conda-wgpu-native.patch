@@ -8,35 +8,38 @@ build. The recipe provides matching C/C++ WebGPU headers as explicit hashed
 sources because the current conda-forge WebGPU C headers are not
 source-compatible with this generated wrapper, and links the extension against
 conda-forge's wgpu-native package. Also use conda-forge pybind11 and nanoflann
-instead of adding those projects as source copies.
+instead of adding those projects as source copies, and build the pinned CDT
+commit from a hashed recipe source instead of fetching it.
 ---
- CMakeLists.txt    |  6 +++---
- cmake/webgpu.cmake | 55 +++++++++++++++++++++++++++++++++++++++++++++---------
- 2 files changed, 51 insertions(+), 10 deletions(-)
+ CMakeLists.txt     |  6 ++---
+ cmake/CDT.cmake    |  9 +-------
+ cmake/webgpu.cmake | 55 ++++++++++++++++++++++++++++++++++++++++------
+ 3 files changed, 52 insertions(+), 18 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 46ba7e4..cdf4f49 100644
+index 0376216..4f3f418 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -47,6 +47,6 @@ target_include_directories(PoissonRecon INTERFACE "${CMAKE_BINARY_DIR}/_deps/poi
+@@ -50,7 +50,7 @@ add_library(PoissonRecon INTERFACE)
+ target_include_directories(PoissonRecon INTERFACE "${CMAKE_BINARY_DIR}/_deps/poissonrecon-src/Src/")
  
  # Include nanoflann
 -include(nanoflann)
 +find_package(nanoflann CONFIG REQUIRED)
  
- # Include webgpu
- include(webgpu)
-@@ -61,7 +61,7 @@ else()
+ # Include CDT
+ include(CDT)
+@@ -66,7 +66,7 @@ else()
  endif()
  
  # List of all libraries to link
--set(LIBRARIES_TO_LINK igl::core igl::embree nanoflann PoissonRecon ${GL_LIBS})
-+set(LIBRARIES_TO_LINK igl::core igl::embree nanoflann::nanoflann PoissonRecon ${GL_LIBS})
- set(COPYLEFT_LIBRARIES_TO_LINK igl::core igl_copyleft::cgal)
- 
- add_library(cpytoolbox
-@@ -151,7 +151,7 @@ target_link_libraries(cpytoolbox_copyleft ${COPYLEFT_LIBRARIES_TO_LINK})
- set(COPYLEFT_LIBRARIES_TO_LINK cpytoolbox_copyleft ${COPYLEFT_LIBRARIES_TO_LINK})
+-set(LIBRARIES_TO_LINK igl::core nanoflann CDT::CDT PoissonRecon ${GL_LIBS})
++set(LIBRARIES_TO_LINK igl::core nanoflann::nanoflann CDT::CDT PoissonRecon ${GL_LIBS})
+ if(LIBIGL_EMBREE)
+ 	list(APPEND LIBRARIES_TO_LINK igl::embree)
+ endif()
+@@ -160,7 +160,7 @@ endif()
+ set(LIBRARIES_TO_LINK cpytoolbox ${LIBRARIES_TO_LINK})
  
  # Otman's python bindings using pybind11
 -add_subdirectory(./ext/pybind11/)
@@ -44,8 +47,25 @@ index 46ba7e4..cdf4f49 100644
  pybind11_add_module(gpytoolbox_bindings
      "${CMAKE_CURRENT_SOURCE_DIR}/src/cpp/gpytoolbox_bindings_core.cpp"
  	"${CMAKE_CURRENT_SOURCE_DIR}/src/cpp/binding_read_obj.cpp"
+diff --git a/cmake/CDT.cmake b/cmake/CDT.cmake
+index 5010a88..33eb708 100644
+--- a/cmake/CDT.cmake
++++ b/cmake/CDT.cmake
+@@ -2,11 +2,4 @@ if(TARGET CDT::CDT)
+     return()
+ endif()
+ 
+-include(FetchContent)
+-FetchContent_Declare(
+-    CDT
+-    GIT_REPOSITORY https://github.com/artem-ogre/CDT.git
+-    GIT_TAG 3765e08ec4bbef0c6b721204d7c0e45d279084e9
+-    SOURCE_SUBDIR CDT
+-)
+-FetchContent_MakeAvailable(CDT)
++add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/ext/CDT/CDT" "${CMAKE_BINARY_DIR}/_deps/cdt-build")
 diff --git a/cmake/webgpu.cmake b/cmake/webgpu.cmake
-index 5bcd7a3..57f48af 100644
+index 676e792..6d5f87b 100644
 --- a/cmake/webgpu.cmake
 +++ b/cmake/webgpu.cmake
 @@ -2,10 +2,51 @@ if(TARGET webgpu)

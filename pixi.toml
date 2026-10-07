@@ -55,6 +55,24 @@ description = "Debug gpytoolbox-feedstock with variant linux_64_channel_sourcesc
 [feature.build.tasks."inspect-linux_64_channel_sourcesconda-forgepython3.12.____cpython"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_64_channel_sourcesconda-forgepython3.12.____cpython.yaml"
 description = "List contents of gpytoolbox-feedstock packages built for variant linux_64_channel_sourcesconda-forgepython3.12.____cpython"
+[feature.build.tasks."build-linux_64_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/linux_64_channel_sourcesconda-forgepython3.13.____cp313.yaml --target-platform linux-64"
+description = "Build gpytoolbox-feedstock with variant linux_64_channel_sourcesconda-forgepython3.13.____cp313 directly (without setup scripts)"
+[feature.build.tasks."debug-linux_64_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_64_channel_sourcesconda-forgepython3.13.____cp313.yaml --target-platform linux-64"
+description = "Debug gpytoolbox-feedstock with variant linux_64_channel_sourcesconda-forgepython3.13.____cp313 directly (without setup scripts)"
+[feature.build.tasks."inspect-linux_64_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_64_channel_sourcesconda-forgepython3.13.____cp313.yaml"
+description = "List contents of gpytoolbox-feedstock packages built for variant linux_64_channel_sourcesconda-forgepython3.13.____cp313"
+[feature.build.tasks."build-linux_64_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/linux_64_channel_sourcesconda-forgepython3.14.____cp314.yaml --target-platform linux-64"
+description = "Build gpytoolbox-feedstock with variant linux_64_channel_sourcesconda-forgepython3.14.____cp314 directly (without setup scripts)"
+[feature.build.tasks."debug-linux_64_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_64_channel_sourcesconda-forgepython3.14.____cp314.yaml --target-platform linux-64"
+description = "Debug gpytoolbox-feedstock with variant linux_64_channel_sourcesconda-forgepython3.14.____cp314 directly (without setup scripts)"
+[feature.build.tasks."inspect-linux_64_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_64_channel_sourcesconda-forgepython3.14.____cp314.yaml"
+description = "List contents of gpytoolbox-feedstock packages built for variant linux_64_channel_sourcesconda-forgepython3.14.____cp314"
 [feature.build.tasks."build-linux_aarch64_channel_sourcesconda-forgepython3.11.____cpython"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_aarch64_channel_sourcesconda-forgepython3.11.____cpython.yaml --target-platform linux-aarch64"
 description = "Build gpytoolbox-feedstock with variant linux_aarch64_channel_sourcesconda-forgepython3.11.____cpython directly (without setup scripts)"
@@ -73,6 +91,24 @@ description = "Debug gpytoolbox-feedstock with variant linux_aarch64_channel_sou
 [feature.build.tasks."inspect-linux_aarch64_channel_sourcesconda-forgepython3.12.____cpython"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_aarch64_channel_sourcesconda-forgepython3.12.____cpython.yaml"
 description = "List contents of gpytoolbox-feedstock packages built for variant linux_aarch64_channel_sourcesconda-forgepython3.12.____cpython"
+[feature.build.tasks."build-linux_aarch64_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/linux_aarch64_channel_sourcesconda-forgepython3.13.____cp313.yaml --target-platform linux-aarch64"
+description = "Build gpytoolbox-feedstock with variant linux_aarch64_channel_sourcesconda-forgepython3.13.____cp313 directly (without setup scripts)"
+[feature.build.tasks."debug-linux_aarch64_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_aarch64_channel_sourcesconda-forgepython3.13.____cp313.yaml --target-platform linux-aarch64"
+description = "Debug gpytoolbox-feedstock with variant linux_aarch64_channel_sourcesconda-forgepython3.13.____cp313 directly (without setup scripts)"
+[feature.build.tasks."inspect-linux_aarch64_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_aarch64_channel_sourcesconda-forgepython3.13.____cp313.yaml"
+description = "List contents of gpytoolbox-feedstock packages built for variant linux_aarch64_channel_sourcesconda-forgepython3.13.____cp313"
+[feature.build.tasks."build-linux_aarch64_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/linux_aarch64_channel_sourcesconda-forgepython3.14.____cp314.yaml --target-platform linux-aarch64"
+description = "Build gpytoolbox-feedstock with variant linux_aarch64_channel_sourcesconda-forgepython3.14.____cp314 directly (without setup scripts)"
+[feature.build.tasks."debug-linux_aarch64_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_aarch64_channel_sourcesconda-forgepython3.14.____cp314.yaml --target-platform linux-aarch64"
+description = "Debug gpytoolbox-feedstock with variant linux_aarch64_channel_sourcesconda-forgepython3.14.____cp314 directly (without setup scripts)"
+[feature.build.tasks."inspect-linux_aarch64_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_aarch64_channel_sourcesconda-forgepython3.14.____cp314.yaml"
+description = "List contents of gpytoolbox-feedstock packages built for variant linux_aarch64_channel_sourcesconda-forgepython3.14.____cp314"
 [feature.build.tasks."build-linux_ppc64le_channel_sourcesconda-forgepython3.11.____cpython"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_ppc64le_channel_sourcesconda-forgepython3.11.____cpython.yaml --target-platform linux-ppc64le"
 description = "Build gpytoolbox-feedstock with variant linux_ppc64le_channel_sourcesconda-forgepython3.11.____cpython directly (without setup scripts)"
@@ -91,6 +127,24 @@ description = "Debug gpytoolbox-feedstock with variant linux_ppc64le_channel_sou
 [feature.build.tasks."inspect-linux_ppc64le_channel_sourcesconda-forgepython3.12.____cpython"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_ppc64le_channel_sourcesconda-forgepython3.12.____cpython.yaml"
 description = "List contents of gpytoolbox-feedstock packages built for variant linux_ppc64le_channel_sourcesconda-forgepython3.12.____cpython"
+[feature.build.tasks."build-linux_ppc64le_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/linux_ppc64le_channel_sourcesconda-forgepython3.13.____cp313.yaml --target-platform linux-ppc64le"
+description = "Build gpytoolbox-feedstock with variant linux_ppc64le_channel_sourcesconda-forgepython3.13.____cp313 directly (without setup scripts)"
+[feature.build.tasks."debug-linux_ppc64le_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_ppc64le_channel_sourcesconda-forgepython3.13.____cp313.yaml --target-platform linux-ppc64le"
+description = "Debug gpytoolbox-feedstock with variant linux_ppc64le_channel_sourcesconda-forgepython3.13.____cp313 directly (without setup scripts)"
+[feature.build.tasks."inspect-linux_ppc64le_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_ppc64le_channel_sourcesconda-forgepython3.13.____cp313.yaml"
+description = "List contents of gpytoolbox-feedstock packages built for variant linux_ppc64le_channel_sourcesconda-forgepython3.13.____cp313"
+[feature.build.tasks."build-linux_ppc64le_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/linux_ppc64le_channel_sourcesconda-forgepython3.14.____cp314.yaml --target-platform linux-ppc64le"
+description = "Build gpytoolbox-feedstock with variant linux_ppc64le_channel_sourcesconda-forgepython3.14.____cp314 directly (without setup scripts)"
+[feature.build.tasks."debug-linux_ppc64le_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_ppc64le_channel_sourcesconda-forgepython3.14.____cp314.yaml --target-platform linux-ppc64le"
+description = "Debug gpytoolbox-feedstock with variant linux_ppc64le_channel_sourcesconda-forgepython3.14.____cp314 directly (without setup scripts)"
+[feature.build.tasks."inspect-linux_ppc64le_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_ppc64le_channel_sourcesconda-forgepython3.14.____cp314.yaml"
+description = "List contents of gpytoolbox-feedstock packages built for variant linux_ppc64le_channel_sourcesconda-forgepython3.14.____cp314"
 [feature.build.tasks."build-osx_64_channel_sourcesconda-forgepython3.11.____cpython"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_64_channel_sourcesconda-forgepython3.11.____cpython.yaml --target-platform osx-64"
 description = "Build gpytoolbox-feedstock with variant osx_64_channel_sourcesconda-forgepython3.11.____cpython directly (without setup scripts)"
@@ -109,6 +163,24 @@ description = "Debug gpytoolbox-feedstock with variant osx_64_channel_sourcescon
 [feature.build.tasks."inspect-osx_64_channel_sourcesconda-forgepython3.12.____cpython"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_64_channel_sourcesconda-forgepython3.12.____cpython.yaml"
 description = "List contents of gpytoolbox-feedstock packages built for variant osx_64_channel_sourcesconda-forgepython3.12.____cpython"
+[feature.build.tasks."build-osx_64_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/osx_64_channel_sourcesconda-forgepython3.13.____cp313.yaml --target-platform osx-64"
+description = "Build gpytoolbox-feedstock with variant osx_64_channel_sourcesconda-forgepython3.13.____cp313 directly (without setup scripts)"
+[feature.build.tasks."debug-osx_64_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/osx_64_channel_sourcesconda-forgepython3.13.____cp313.yaml --target-platform osx-64"
+description = "Debug gpytoolbox-feedstock with variant osx_64_channel_sourcesconda-forgepython3.13.____cp313 directly (without setup scripts)"
+[feature.build.tasks."inspect-osx_64_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_64_channel_sourcesconda-forgepython3.13.____cp313.yaml"
+description = "List contents of gpytoolbox-feedstock packages built for variant osx_64_channel_sourcesconda-forgepython3.13.____cp313"
+[feature.build.tasks."build-osx_64_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/osx_64_channel_sourcesconda-forgepython3.14.____cp314.yaml --target-platform osx-64"
+description = "Build gpytoolbox-feedstock with variant osx_64_channel_sourcesconda-forgepython3.14.____cp314 directly (without setup scripts)"
+[feature.build.tasks."debug-osx_64_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/osx_64_channel_sourcesconda-forgepython3.14.____cp314.yaml --target-platform osx-64"
+description = "Debug gpytoolbox-feedstock with variant osx_64_channel_sourcesconda-forgepython3.14.____cp314 directly (without setup scripts)"
+[feature.build.tasks."inspect-osx_64_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_64_channel_sourcesconda-forgepython3.14.____cp314.yaml"
+description = "List contents of gpytoolbox-feedstock packages built for variant osx_64_channel_sourcesconda-forgepython3.14.____cp314"
 [feature.build.tasks."build-osx_arm64_channel_sourcesconda-forgepython3.11.____cpython"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_arm64_channel_sourcesconda-forgepython3.11.____cpython.yaml --target-platform osx-arm64"
 description = "Build gpytoolbox-feedstock with variant osx_arm64_channel_sourcesconda-forgepython3.11.____cpython directly (without setup scripts)"
@@ -127,6 +199,24 @@ description = "Debug gpytoolbox-feedstock with variant osx_arm64_channel_sources
 [feature.build.tasks."inspect-osx_arm64_channel_sourcesconda-forgepython3.12.____cpython"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_arm64_channel_sourcesconda-forgepython3.12.____cpython.yaml"
 description = "List contents of gpytoolbox-feedstock packages built for variant osx_arm64_channel_sourcesconda-forgepython3.12.____cpython"
+[feature.build.tasks."build-osx_arm64_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/osx_arm64_channel_sourcesconda-forgepython3.13.____cp313.yaml --target-platform osx-arm64"
+description = "Build gpytoolbox-feedstock with variant osx_arm64_channel_sourcesconda-forgepython3.13.____cp313 directly (without setup scripts)"
+[feature.build.tasks."debug-osx_arm64_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/osx_arm64_channel_sourcesconda-forgepython3.13.____cp313.yaml --target-platform osx-arm64"
+description = "Debug gpytoolbox-feedstock with variant osx_arm64_channel_sourcesconda-forgepython3.13.____cp313 directly (without setup scripts)"
+[feature.build.tasks."inspect-osx_arm64_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_arm64_channel_sourcesconda-forgepython3.13.____cp313.yaml"
+description = "List contents of gpytoolbox-feedstock packages built for variant osx_arm64_channel_sourcesconda-forgepython3.13.____cp313"
+[feature.build.tasks."build-osx_arm64_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/osx_arm64_channel_sourcesconda-forgepython3.14.____cp314.yaml --target-platform osx-arm64"
+description = "Build gpytoolbox-feedstock with variant osx_arm64_channel_sourcesconda-forgepython3.14.____cp314 directly (without setup scripts)"
+[feature.build.tasks."debug-osx_arm64_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/osx_arm64_channel_sourcesconda-forgepython3.14.____cp314.yaml --target-platform osx-arm64"
+description = "Debug gpytoolbox-feedstock with variant osx_arm64_channel_sourcesconda-forgepython3.14.____cp314 directly (without setup scripts)"
+[feature.build.tasks."inspect-osx_arm64_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_arm64_channel_sourcesconda-forgepython3.14.____cp314.yaml"
+description = "List contents of gpytoolbox-feedstock packages built for variant osx_arm64_channel_sourcesconda-forgepython3.14.____cp314"
 [feature.build.tasks."build-win_64_channel_sourcesconda-forgepython3.11.____cpython"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/win_64_channel_sourcesconda-forgepython3.11.____cpython.yaml --target-platform win-64"
 description = "Build gpytoolbox-feedstock with variant win_64_channel_sourcesconda-forgepython3.11.____cpython directly (without setup scripts)"
@@ -145,6 +235,24 @@ description = "Debug gpytoolbox-feedstock with variant win_64_channel_sourcescon
 [feature.build.tasks."inspect-win_64_channel_sourcesconda-forgepython3.12.____cpython"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/win_64_channel_sourcesconda-forgepython3.12.____cpython.yaml"
 description = "List contents of gpytoolbox-feedstock packages built for variant win_64_channel_sourcesconda-forgepython3.12.____cpython"
+[feature.build.tasks."build-win_64_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/win_64_channel_sourcesconda-forgepython3.13.____cp313.yaml --target-platform win-64"
+description = "Build gpytoolbox-feedstock with variant win_64_channel_sourcesconda-forgepython3.13.____cp313 directly (without setup scripts)"
+[feature.build.tasks."debug-win_64_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/win_64_channel_sourcesconda-forgepython3.13.____cp313.yaml --target-platform win-64"
+description = "Debug gpytoolbox-feedstock with variant win_64_channel_sourcesconda-forgepython3.13.____cp313 directly (without setup scripts)"
+[feature.build.tasks."inspect-win_64_channel_sourcesconda-forgepython3.13.____cp313"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/win_64_channel_sourcesconda-forgepython3.13.____cp313.yaml"
+description = "List contents of gpytoolbox-feedstock packages built for variant win_64_channel_sourcesconda-forgepython3.13.____cp313"
+[feature.build.tasks."build-win_64_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/win_64_channel_sourcesconda-forgepython3.14.____cp314.yaml --target-platform win-64"
+description = "Build gpytoolbox-feedstock with variant win_64_channel_sourcesconda-forgepython3.14.____cp314 directly (without setup scripts)"
+[feature.build.tasks."debug-win_64_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/win_64_channel_sourcesconda-forgepython3.14.____cp314.yaml --target-platform win-64"
+description = "Debug gpytoolbox-feedstock with variant win_64_channel_sourcesconda-forgepython3.14.____cp314 directly (without setup scripts)"
+[feature.build.tasks."inspect-win_64_channel_sourcesconda-forgepython3.14.____cp314"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/win_64_channel_sourcesconda-forgepython3.14.____cp314.yaml"
+description = "List contents of gpytoolbox-feedstock packages built for variant win_64_channel_sourcesconda-forgepython3.14.____cp314"
 
 [environments]
 build = ["build"]

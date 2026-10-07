@@ -2,8 +2,8 @@ schema_version: 1
 
 context:
   name: gpytoolbox
-  version: "0.3.7"
-  build_number: 4
+  version: "0.3.8"
+  build_number: 0
 
 package:
   name: ${{ name|lower }}
@@ -11,11 +11,9 @@ package:
 
 source:
   - url: https://github.com/sgsellan/gpytoolbox/archive/v${{ version }}.tar.gz
-    sha256: 826bc93720cd341c751a19a9ac0c772afcea3a5992854534fe2c44d2d6cf1940
+    sha256: 8d4186c0f718ca5a18613faa1ddd23e41bf8d925fc8f87beca851dba38e9a2e5
     patches:
       - patches/0001-use-conda-wgpu-native.patch
-      - patches/0002-honor-conda-cmake-args.patch
-      - patches/0003-make-embree-optional.patch
   # These C headers must match the generated C++ wrapper below. The current
   # conda-forge WebGPU C headers are source-incompatible with this wrapper.
   - url: https://raw.githubusercontent.com/eliemichel/WebGPU-distribution/9dd47f8515dfd7112b750da07e719460a88bf2e8/include/webgpu/webgpu.h
@@ -34,15 +32,20 @@ source:
     sha256: 46f069fb0e448fb4d5e9e21b3483912495381399656fe7a1190541b7bf74f668
     target_directory: ext/webgpu-distribution-headers
     file_name: LICENSE.txt
+  # The CDT commit pinned by upstream's cmake/CDT.cmake.
+  - url: https://github.com/artem-ogre/CDT/archive/3765e08ec4bbef0c6b721204d7c0e45d279084e9.tar.gz
+    sha256: 5274dffc981adf0c708a3b252f5a6b848d04a718630bd14a699d9ea9550e6538
+    target_directory: ext/CDT
 
 build:
   number: ${{ build_number }}
-  # Embree is unavailable on linux-ppc64le. The optional fast path is disabled
-  # there, while GPyToolbox's portable AABB implementation remains available.
   skip:
     - python_impl == "pypy"
-    - match(python, ">=3.13")
+    # Upstream caps numpy at 2.4.6 and scipy at 1.17.1; neither has Python 3.15 builds.
+    - match(python, ">=3.15")
   script:
+    # Embree is unavailable on linux-ppc64le. The optional fast path is disabled
+    # there, while GPyToolbox's portable AABB implementation remains available.
     - if: target_platform == "linux-ppc64le"
       then: export CMAKE_ARGS="${CMAKE_ARGS} -DLIBIGL_EMBREE=OFF"
     - python -m pip install . -vv --no-deps --no-build-isolation
@@ -56,7 +59,7 @@ requirements:
     - ${{ compiler("c") }}
     - ${{ compiler("cxx") }}
     - ${{ stdlib("c") }}
-    - cmake >=3.16,<3.27
+    - cmake >=4.2,<4.4.2
     - if: build_platform != target_platform
       then:
         - cross-python_${{ target_platform }}
@@ -72,8 +75,8 @@ requirements:
     - packaging
     - pip
     - python
-    - pybind11
-    - setuptools
+    - pybind11 >=2.4
+    - setuptools >=42
     - wheel
     - if: linux
       then:
@@ -93,10 +96,10 @@ requirements:
     # Newer 0.17.x headers remove or rename APIs used by upstream.
     - wgpu-native ==0.17.0.2
   run:
-    - numpy >=1.22.4,<2.3
+    - numpy >=1.22.4,<=2.4.6
     - python
     - scikit-image
-    - scipy >=1.7,<1.14
+    - scipy >=1.7,<=1.17.1
     - scs
 
 tests:
@@ -129,6 +132,7 @@ about:
     - LICENSE.MIT
     - LICENSE.GPL
     - ext/webgpu-distribution-headers/LICENSE.txt
+    - ext/CDT/LICENSE
 
 extra:
   feedstock-name: gpytoolbox

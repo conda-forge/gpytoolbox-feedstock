@@ -59,7 +59,7 @@ requirements:
     - ${{ compiler("c") }}
     - ${{ compiler("cxx") }}
     - ${{ stdlib("c") }}
-    - cmake >=3.16,<3.27
+    - cmake >=4.2,<4.4.2
     - if: build_platform != target_platform
       then:
         - cross-python_${{ target_platform }}
@@ -75,8 +75,8 @@ requirements:
     - packaging
     - pip
     - python
-    - pybind11
-    - setuptools
+    - pybind11 >=2.4
+    - setuptools >=42
     - wheel
     - if: linux
       then:
